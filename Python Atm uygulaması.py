@@ -1,71 +1,66 @@
-print("""ATM sistemine hoşgeldiniz""")
-print("""İşlem yapacağınız bankanızı seçiniz
-1 - Denizbank
-2 - Akbank
-3 - Ziraat Bankası
+print("""ATM sistemine hoşgeldiniz
+Bankanızı seçiniz:
+1- Denizbank
+2- Akbank
+3- Ziraat Bankası
+Ekle- Yeni banka kartı ekle
 """)
-
-bankalar = [{"banka": "Denizbank", "bakiye": 1500.0, "sifre": "1234"},
-            {"banka": "Akbank", "bakiye": 3000.0, "sifre": "12345"},
-            {"banka": "Ziraat Bankası", "bakiye": 9000.0, "sifre": "12346"}]
+bankalar= [{"Banka":"Denizbank","Bakiye":3000,"Sifre":"erdem1"},{"Banka":"Akbank","Bakiye":6000,"Sifre":"erdem12"},{"Banka":"Ziraat","Bakiye":9000,"Sifre":"erdem123"}]
 
 while True:
-    hak = 3
-    secim = input("İşlemi giriniz (Çıkmak için 0'a basınız): ")
-    if secim == "0":
-        break
-    elif secim in ["1", "2", "3"]:
-        banka = bankalar[int(secim)-1]
-        print(f"{banka['banka']} bankasını seçtiniz. Şifrenizi giriniz.")
-        sifre = input("Şifre: ")
-        if sifre == banka["sifre"]:
-            print(f"Şifreniz doğru. Bakiyeniz: {banka['bakiye']}")
-            print("""Yapmak istediğiniz işlemi seçin
-            1 - Para Çekme
-            2 - Para Yatırma
-            """)
-            islem = input("İstediğiniz işlem: ")
-            if islem == "1":
-                cekilecek_miktar = float(input("Çekmek istediğiniz miktarı girin: "))
-                if cekilecek_miktar <= banka['bakiye']:
-                    banka['bakiye'] -= cekilecek_miktar
-                    print(f"{cekilecek_miktar} TL çektiniz. Yeni bakiyeniz: {banka['bakiye']}")
-                else:
-                    print("Yetersiz bakiye!")
-            elif islem == "2":
-                yatirilacak_miktar = float(input("Yatırmak istediğiniz miktarı girin: "))
-                banka['bakiye'] += yatirilacak_miktar
-                print(f"{yatirilacak_miktar} TL yatırdınız. Yeni bakiyeniz: {banka['bakiye']}")
+    hak=3
+    secim=input("bir seçim yapınız:")
+
+    if secim == "Ekle":
+        yeni_banka = {}
+        yeni_banka["Banka"] = input("Yeni banka adını giriniz: ")
+        yeni_banka["Bakiye"] = float(input("Hesap bakiyesini giriniz: "))
+        yeni_banka["Sifre"] = input("Şifreyi giriniz: ")
+        bankalar.append(yeni_banka)
+        print(f"Yeni banka başarıyla eklendi! bakiyeniz {yeni_banka['Bakiye']} tl dir")
+        continue
+
+    banka= bankalar[int(secim)-1]
+    print(f"{banka['Banka']} bankasını seçtiniz lütfen şifrenizi giriniz")
+    sifre= input("Şifreniz:")
+    if sifre== banka['Sifre']:
+        print("Doğru şifre girdiniz")
+        print(f"{banka['Banka']} bankasında bulunan bakiyeniz:{banka['Bakiye']} tl'dir")
+        print("""Yapmak istediğiniz işlemi seçin
+                   1 - Para Çekme
+                   2 - Para Yatırma
+                   """)
+        secim2=input("yapmak istediğiniz işlemi seçin:")
+        if secim2=="1":
+            cekilecek_tutar=float(input("çekmek istediğiniz miktarı giriniz:"))
+            if cekilecek_tutar<=banka['Bakiye']:
+                banka['Bakiye']-=cekilecek_tutar
+                print(f"Hesabınızın yeni bakiyesi {banka['Bakiye']} tl'dir")
+            elif cekilecek_tutar>banka['Bakiye']:
+                print("Bakiyenizden fazlasını çekemezssiniz")
+        elif secim2=="2":
+            yatırılacak_miktar=float(input("yatırmak istediğiniz miktarı giriniz:"))
+            banka['Bakiye']+=yatırılacak_miktar
+            print(f"Hesabanızın yeni bakiyesi {banka['Bakiye']} tl'dir")
+
+
+    else:
+        while hak>1:
+            hak-=1
+            print(f"yanlış şifre girdiniz {hak} hakkınız kalmıştır dikkatli kullanın")
+            secim3=input("Tekrar şifre girin:")
+            if secim3 == "1":
+                cekilecek_tutar = float(input("çekmek istediğiniz miktarı giriniz:"))
+                if cekilecek_tutar <= banka['Bakiye']:
+                    banka['Bakiye'] -= cekilecek_tutar
+                    print(f"Hesabınızın yeni bakiyesi {banka['Bakiye']} tl'dir")
+                elif cekilecek_tutar > banka['Bakiye']:
+                    print("Bakiyenizden fazlasını çekemezssiniz")
+            elif secim3 == "2":
+                yatırılacak_miktar = float(input("yatırmak istediğiniz miktarı giriniz:"))
+                banka['Bakiye'] += yatırılacak_miktar
+                print(f"Hesabanızın yeni bakiyesi {banka['Bakiye']} tl'dir")
             else:
-                print("Geçersiz işlem seçimi!")
+                print("Geçersiz bir işlem girdiniz")
         else:
-                while hak > 1:
-                    hak -= 1
-                    print(f"Yanlış şifre girdiniz. {hak} hakkınız kaldı.")
-                    sifre = input("Tekrar şifre giriniz: ")
-                    if sifre == banka["sifre"]:
-                        print(f"Şifreniz doğru. Bakiyeniz: {banka['bakiye']}")
-                        print("""Yapmak istediğiniz işlemi seçin
-                            1 - Para Çekme
-                            2 - Para Yatırma
-                            """)
-                        islem = input("İstediğiniz işlem: ")
-                        if islem == "1":
-                            cekilecek_miktar = float(input("Çekmek istediğiniz miktarı girin: "))
-                            if cekilecek_miktar <= banka['bakiye']:
-                                banka['bakiye'] -= cekilecek_miktar
-                                print(f"{cekilecek_miktar} TL çektiniz. Yeni bakiyeniz: {banka['bakiye']}")
-                            else:
-                                print("Yetersiz bakiye!")
-                        elif islem == "2":
-                            yatirilacak_miktar = float(input("Yatırmak istediğiniz miktarı girin: "))
-                            banka['bakiye'] += yatirilacak_miktar
-                            print(f"{yatirilacak_miktar} TL yatırdınız. Yeni bakiyeniz: {banka['bakiye']}")
-                        else:
-                            print("Geçersiz işlem seçimi!")
-                        break
-                else:
-                    print("Hatalı giriş sayısı aşıldı. Kartınız bloke oldu!")
-                    break
-
-
+            print("Hakkınız doldu kartınız bloke olmuştur.")
